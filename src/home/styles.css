@@ -1,0 +1,14 @@
+.item-panel{
+    font-size: xx-large;
+    color: aliceblue;
+}
+
+.item-panel:hover{
+    background-color: rgb(41, 41, 41, 0.7) !important;
+}
+
+.item-panel p{
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 600;
+    font-size: medium;
+}
