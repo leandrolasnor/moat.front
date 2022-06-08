@@ -33,12 +33,12 @@ let Auth = props => {
 	return (
     <Container lg={12} md={12} sm={12} xs={12}>
         <Row className="bg-dark mt-5 pt-4 profile">
-          <Col className="text-light mt-4 mb-5" lg={{ span: 4, offset: 8 }} md={5} sm={12} xs={12}>
+          <Col className="text-light mt-4 mb-5" lg={12}>
 							<ListTecnologies />
           </Col>
         </Row>
         <Row style={style_main_panel}>
-          <Col className="text-light mt-4 mb-4" lg={{span:6, offset:3}} md={5} sm={12} xs={12}>
+          <Col className="text-light mt-4 mb-4" lg={{span:6, offset:3}}>
             <Accordion defaultActiveKey="0">
               <Card className="bg-dark">
                 <Accordion.Toggle as={Card.Header} eventKey="0">
