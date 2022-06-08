@@ -8,7 +8,7 @@ export function refreshToken(token){
   }
 }
 
-function submit(values) {
+export function login(values) {
   const config = {
     "headers":{
       'Content-Type': process.env.REACT_APP_CONTENTTYPE
@@ -53,16 +53,48 @@ function submit(values) {
   };
 }
 
-export function login(values) {
-  return dispatch => {
-    let form_values = values;
-    if (!form_values || !form_values.email || !form_values.password) {
-      toastr.info(":( Oh noo!", "OS CAMPOS LOGIN E SENHA SÃO OBRIGATÓRIOS");
-      return;
+export function register(values) {
+  const config = {
+    "headers":{
+      'Content-Type': process.env.REACT_APP_CONTENTTYPE
     }
-    return dispatch(
-      submit(form_values)
-    );
+  }
+  return dispatch => { 
+    dispatch([{ type: "SHOW_OVERLAY" }]);
+    axios.post(`${process.env.REACT_APP_API_URL}/auth`, values, config).then(resp => {
+      dispatch(
+        [
+          {
+            type: "USER_FETCHED",
+            payload: {
+              data: resp.data,
+              headers: resp.headers,
+              permissions: [],
+            }
+          },
+          { type: "HIDE_OVERLAY" },
+          {
+            type: "REFRESH_TOKEN",
+            payload: _.get(resp,"headers.access-token")
+          }
+        ]
+      );
+    }).catch(e => {
+      if (e.response) {
+        if (e.response.data.errors) {
+            e.response.data.errors.forEach(error =>
+            toastr.error("Erro", error)
+          );
+        } else {
+          toastr.error(String(e.response.status), e.response.statusText);
+        }
+      } else if (e.request) {
+        if (e.message === "Network Error") {
+          toastr.error("Erro", "Servidor OFFLINE");
+        }
+      }
+      dispatch([{ type: "HIDE_OVERLAY" }]);
+    });
   };
 }
 

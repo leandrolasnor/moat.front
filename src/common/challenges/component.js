@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap"
-export const Back = props => {
+export const MusicCollection = props => {
 
   let Texto = props => {
     return (

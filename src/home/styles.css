@@ -1,6 +1,7 @@
 .item-panel{
     font-size: xx-large;
     color: aliceblue;
+    color: darkseagreen;
 }
 
 .item-panel:hover{
@@ -11,4 +12,5 @@
     font-family: Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 600;
     font-size: medium;
+    color: darkseagreen;
 }
