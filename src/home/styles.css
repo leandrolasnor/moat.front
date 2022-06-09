@@ -5,12 +5,36 @@
 }
 
 .item-panel:hover{
-    background-color: rgb(41, 41, 41, 0.7) !important;
+    background-color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .item-panel p{
     font-family: Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 600;
     font-size: medium;
+    color: rgb(0, 0, 0);
+}
+
+.item-painel-link{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.item-painel-link:hover{
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+.darkseagreen{
     color: darkseagreen;
 }
+
+a.darkseagreen{
+    text-decoration: none;
+}
+a.darkseagreen:hover{
+    text-decoration: none;
+    color: darkseagreen;
+}
+

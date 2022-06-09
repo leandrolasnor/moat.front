@@ -1,20 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import ReactTooltip from "react-tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ImgProfile from "../imgs/profile.png";
 import './style.css'
 import React from "react";
 import { logout } from "../../auth/actions";
-import RequestInterceptor from '../axios/request_interceptor'
 
 let Profile = props => {
 	const dispatch = useDispatch()
 	const {user: {name, email}} = props
-	const {user} = props
-
+	const user = props
 	return (
 		<React.Fragment>
-			<RequestInterceptor user={user} />
 			<img src={ImgProfile} className="image--profile" alt="Profile" />
 			<p className="name">
 					{name} <a href="https://drive.google.com/file/d/1D7_LPjNh92eBQIQukwuYRKkxhPmn2NRL/view" rel="noopener noreferrer" target="_blank" data-tip data-for="nuuvem">

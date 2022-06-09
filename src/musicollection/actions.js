@@ -2,9 +2,15 @@ import { toastr } from "react-redux-toastr";
 import axios from "axios";
 const _ = require("lodash");
 
-export function search_albums(query){
-  return dispatch => { 
-    axios.get(`${process.env.REACT_APP_API_URL}/albums/search/${query}`,).then(resp => {}).catch(e => {
+export function search_albums(query = ''){
+  query = query.toString().toLowerCase();
+  const config = {
+    headers:{
+      pagination:{current_page:2}
+    }
+  }
+  return dispatch => {
+    axios.get(`${process.env.REACT_APP_API_URL}/albums/search/${query}`, config).then(resp => {}).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
             e.response.data.errors.forEach(error => toastr.error("Error", error));

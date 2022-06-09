@@ -19,9 +19,15 @@ var reducer = (state = INITIAL_STATE, action) => {
       toastr.success("New Album", action.payload.name)
       return state
     case 'ALBUMS_FETCHED':
+      let items = []
+      if(_.get(state.pagination, 'Current-Page') > 1){
+        items = [state.albums, action.payload.albums];
+      }else{
+        items = action.payload.albums;
+      }
       return {
         ...state,
-        albums: action.payload
+        albums: items
       }
     case 'PAGINATION_ALBUMS':
       return {
@@ -33,9 +39,7 @@ var reducer = (state = INITIAL_STATE, action) => {
       return state
     case 'ALBUM_UPDATED':
       const album = action.payload.album;
-      const albums = state.albums.filter(obj => {
-        obj.id !== album.id
-      });
+      const albums = state.albums.filter(obj => obj.id !== album.id);
       return {
         ...state,
         albums: [...albums, album]

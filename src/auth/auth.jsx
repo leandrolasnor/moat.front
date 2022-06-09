@@ -7,14 +7,11 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import ListTecnologies from '../common/tecnologies/componet'
 import renderSelect from '../common/inputs/select'
 
 const InputText = props => <Form.Control size="sm" className="mb-2" autoComplete="on" {...props.input} {...props} />
-
-const style_main_panel = {backgroundColor: 'rgba(0, 0, 0, 0.9)'}
 
 let Auth = props => {
   const dispatch = useDispatch()
@@ -37,7 +34,7 @@ let Auth = props => {
 							<ListTecnologies />
           </Col>
         </Row>
-        <Row style={style_main_panel}>
+        <Row style={{backgroundColor: 'rgba(0, 0, 0, 0.9)'}}>
           <Col className="text-light mt-4 mb-4" lg={{span:6, offset:3}}>
             <Accordion defaultActiveKey="0">
               <Card className="bg-dark">
