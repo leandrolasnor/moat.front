@@ -16,7 +16,7 @@ export function login(values) {
   }
   return dispatch => { 
     dispatch([{ type: "SHOW_OVERLAY" }]);
-    axios.post(`${process.env.REACT_APP_API_URL}/auth/sign_in`, values, config).then(resp => {
+    axios.post(`/auth/sign_in`, values, config).then(resp => {
       dispatch(
         [
           {
@@ -61,7 +61,7 @@ export function register(values) {
   }
   return dispatch => { 
     dispatch([{ type: "SHOW_OVERLAY" }]);
-    axios.post(`${process.env.REACT_APP_API_URL}/auth`, values, config).then(resp => {
+    axios.post(`/auth`, values, config).then(resp => {
       dispatch(
         [
           {
@@ -98,17 +98,9 @@ export function register(values) {
   };
 }
 
-export function logout(data) {
-  const config = {
-    headers:{
-      "uid": _.get(data,"uid"),
-      "client":_.get(data,"client"),
-      "access-token": _.get(data,"access-token"),
-      'Content-Type': process.env.REACT_APP_CONTENTTYPE
-    }
-  }
+export const logout = () => {
   return dispatch => {
-    axios.delete(`${process.env.REACT_APP_API_URL}/auth/sign_out`, config)
+    axios.delete(`/auth/sign_out`)
     .then(resp => {
       if(resp.data.success){
         dispatch({ type: "LOGOUT" })

@@ -6,8 +6,8 @@ import { NavLink } from 'react-router-dom';
 import axios from "axios";
 import {search_albums} from './actions'
 const _ = require("lodash");
-const List = () => {
-  const albums = useSelector(state => state.musicollection.albums)
+const List = props => {
+  const {albums} = props
   const listItems = albums.map(
     (album, i) => (
       <tr key={i}>
@@ -27,7 +27,8 @@ let Musicollection = props => {
   const dispatch = useDispatch();
   const seletor = formValueSelector("musicollection");
   const query = useSelector(state => seletor(state, "query"))
-  const current_page = useSelector(state => _.get(state.musicollection.pagination, 'Current-Page'))
+  const musicollection = useSelector(state => state.musicollection)
+  const {albums, pagination} = musicollection;
   const [searching, setSearching] = useState(false);	
   const { submitting, reset } = props;
 
@@ -41,10 +42,15 @@ let Musicollection = props => {
     setSearching(false)
   }
 
-  const handlePaginate = (props) => {
-    // axios.defaults.headers.common['pagination']['current_page'] = current_page + 1;
-    console.log(current_page+1)
+  const handlePagination = () => {
+    axios.defaults.headers.common['current-page'] = _.get(pagination, 'current_page') + 1
     dispatch(search_albums(query))
+  }
+
+  const handleSubmit = (e) => {
+    axios.defaults.headers.common['current-page'] = 1
+    dispatch(search_albums(query))
+    setSearching(true)
   }
 
   return (
@@ -58,7 +64,7 @@ let Musicollection = props => {
                 </h3>
               </Col>
               <Col lg={{ span: 6, offset: 0 }}>
-                <Form onSubmit={e => {dispatch(search_albums(query)); e.preventDefault(); setSearching(true)}}>
+                <Form onSubmit={e => {e.preventDefault(); handleSubmit(e);}}>
                   <Row>
                     <Col lg={{ span: 9, offset: 0 }}>
                       <Field component={InputText} onChange={handleSearchChanged} onKeyDown={(e) => e.key === 'Escape' ? handleReset() : null} name="query" placeholder="Search" type="text" />
@@ -72,7 +78,7 @@ let Musicollection = props => {
             </Row>
           </Card.Header>
             <Card.Body>
-              <Card.Text lg={12}>
+              <Card.Text>
                 <Table variant="dark">
                   <thead>
                     <tr>
@@ -83,11 +89,15 @@ let Musicollection = props => {
                     </tr>
                   </thead>
                   <tbody>
-                    <List />
+                    <List albums={albums} />
                   </tbody>
                 </Table>
+                {albums.length ? 
+                  <button type="button" onClick={handlePagination} disabled={pagination.pages_count === pagination.current_page} className="btn-sm btn-light btn-block font-weight-bold">
+                    {`${pagination.current_page}/${pagination.pages_count}`}
+                  </button> : null}
               </Card.Text>
-              <p onClick={handlePaginate} className="text-light font-weight-light">Pagination</p>
+              {/* <p onClick={handlePagination} disabled={pagination.pages_count === pagination.current_page} className="text-light font-weight-light">Pagination</p> */}
             </Card.Body>
         </Card>
     </Col>

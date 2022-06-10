@@ -4,13 +4,8 @@ const _ = require("lodash");
 
 export function search_albums(query = ''){
   query = query.toString().toLowerCase();
-  const config = {
-    headers:{
-      pagination:{current_page:2}
-    }
-  }
   return dispatch => {
-    axios.get(`${process.env.REACT_APP_API_URL}/albums/search/${query}`, config).then(resp => {}).catch(e => {
+    axios.get(`/albums/search/${query}`).then(resp => {}).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
             e.response.data.errors.forEach(error => toastr.error("Error", error));
@@ -22,7 +17,7 @@ export function search_albums(query = ''){
 
 export function delete_album(id){
   return dispatch => { 
-    axios.delete(`${process.env.REACT_APP_API_URL}/albums/${id}`).then(resp => {}).catch(e => {
+    axios.delete(`/albums/${id}`).then(resp => {}).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
             e.response.data.errors.forEach(error => toastr.error("Error", error));
@@ -34,7 +29,7 @@ export function delete_album(id){
 
 export function create_album(album){
   return dispatch => { 
-    axios.post(`${process.env.REACT_APP_API_URL}/albums`, album).then(resp => {}).catch(e => {
+    axios.post(`/albums`, album).then(resp => {}).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
             e.response.data.errors.forEach(error => toastr.error("Error", error));
@@ -46,7 +41,7 @@ export function create_album(album){
 
 export function update_album(album){
   return dispatch => { 
-    axios.put(`${process.env.REACT_APP_API_URL}/albums/${album.id}`, album).then(resp => {}).catch(e => {
+    axios.put(`/albums/${album.id}`, album).then(resp => {}).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
             e.response.data.errors.forEach(error => toastr.error("Error", error));
@@ -59,7 +54,7 @@ export function update_album(album){
 export function show_album(id){
   return dispatch => {
     dispatch({type: 'ALBUM_FETCHED', payload: {}})
-    axios.put(`${process.env.REACT_APP_API_URL}/albums/${id}`).then(resp => {
+    axios.put(`/albums/${id}`).then(resp => {
       dispatch({type: 'ALBUM_FETCHED', payload: resp.data})
     }).catch(e => {
       if (e.response) {

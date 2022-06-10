@@ -20,18 +20,14 @@ var reducer = (state = INITIAL_STATE, action) => {
       return state
     case 'ALBUMS_FETCHED':
       let items = []
-      if(_.get(state.pagination, 'Current-Page') > 1){
-        items = [state.albums, action.payload.albums];
+      if(_.get(action.payload.pagination, 'current_page') > 1){
+        items = [...state.albums, ...action.payload.albums];
       }else{
         items = action.payload.albums;
       }
       return {
         ...state,
-        albums: items
-      }
-    case 'PAGINATION_ALBUMS':
-      return {
-        ...state,
+        albums: items,
         pagination: action.payload.pagination
       }
     case 'ERRORS_FROM_SEARCH_ALBUMS':

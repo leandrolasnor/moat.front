@@ -18,6 +18,7 @@ let App = props => {
     dispatch({type: type, payload: payload});
   }
 
+	axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`
 	axios.defaults.headers.common['Content-type'] = 'application/json';
 	axios.defaults.headers.common['uid'] = _.get(user, "uid");
 	axios.defaults.headers.common['access-token'] = _.get(user, "access-token");
