@@ -1,6 +1,5 @@
 import { toastr } from "react-redux-toastr";
 import axios from "axios";
-const _ = require("lodash");
 
 export function search_albums(query = ''){
   query = query.toString().toLowerCase();

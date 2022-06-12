@@ -1,20 +1,34 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { reduxForm, Field, formValueSelector } from "redux-form";
-import { Col, Row, Table, Card, Form} from "react-bootstrap";
+import { ButtonGroup, Col, Row, Table, Card, Form, Button } from "react-bootstrap";
+import ModalConfirmation from '../common/modal_confirmation/component'
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import {search_albums} from './actions'
+import {search_albums, delete_album} from './actions'
 const _ = require("lodash");
 const List = props => {
-  const {albums} = props
+  const {albums, selection_method, op_method} = props
   const listItems = albums.map(
     (album, i) => (
       <tr key={i}>
         <td>{album.id}</td>
         <td>{album.name}</td>
         <td>{album.year}</td>
-        <td>@ # $ %</td>
+        <td>
+          <ButtonGroup size="sm">
+            <Button size="sm" variant='danger' onClick={() => {selection_method(album); op_method("delete");}}>
+              <FontAwesomeIcon icon={["fas", "fa-trash"]}/>
+            </Button>
+            <Button size="sm" variant='success' onClick={() => {selection_method(album); op_method("show")}}>
+              <FontAwesomeIcon icon={["fas", "fa-list"]}/>
+            </Button>
+            <Button size="sm" variant='info' onClick={() => {selection_method(album); op_method("edit")}}>
+              <FontAwesomeIcon icon={["fas", "fa-edit"]}/>
+            </Button>
+          </ButtonGroup>
+        </td>
       </tr>
     )
   )
@@ -30,6 +44,8 @@ let Musicollection = props => {
   const musicollection = useSelector(state => state.musicollection)
   const {albums, pagination} = musicollection;
   const [searching, setSearching] = useState(false);	
+  const [selected_album, setSelectedAlbum] = useState(null);	
+  const [op, setOpAlbum] = useState(null);	
   const { submitting, reset } = props;
 
 
@@ -42,8 +58,8 @@ let Musicollection = props => {
     setSearching(false)
   }
 
-  const handlePagination = () => {
-    axios.defaults.headers.common['current-page'] = _.get(pagination, 'current_page') + 1
+  const paginate = page => {
+    axios.defaults.headers.common['current-page'] = page
     dispatch(search_albums(query))
   }
 
@@ -51,6 +67,11 @@ let Musicollection = props => {
     axios.defaults.headers.common['current-page'] = 1
     dispatch(search_albums(query))
     setSearching(true)
+  }
+
+  const handleConfirmDeletion = id => {
+    setSelectedAlbum(null)
+    dispatch(delete_album(id))
   }
 
   return (
@@ -89,17 +110,35 @@ let Musicollection = props => {
                     </tr>
                   </thead>
                   <tbody>
-                    <List albums={albums} />
+                    <List albums={albums} selection_method={setSelectedAlbum} op_method={setOpAlbum}/>
                   </tbody>
                 </Table>
                 {albums.length ? 
-                  <button type="button" onClick={handlePagination} disabled={pagination.pages_count === pagination.current_page} className="btn-sm btn-light btn-block font-weight-bold">
-                    {`${pagination.current_page}/${pagination.pages_count}`}
-                  </button> : null}
+                  <Row>
+                    <Col lg={{span:2, offset:3}}>
+                      <Button type="button" onClick={() => paginate(_.get(pagination, 'current_page') - 1)} disabled={1 === pagination.current_page} className="btn-sm btn-light btn-block font-weight-bold">
+                        <FontAwesomeIcon icon={["fas", "fa-arrow-left"]}/>
+                      </Button>
+                    </Col>
+                    <Col lg={2}>
+                      <h3 className="text-center text-light font-weight-light">
+                        {`${pagination.current_page}/${pagination.pages_count}`}
+                      </h3>
+                    </Col>
+                    <Col lg={2}>
+                      <Button type="button" onClick={() => paginate(_.get(pagination, 'current_page') + 1)} disabled={pagination.current_page === pagination.pages_count} className="btn-sm btn-light btn-block font-weight-bold">
+                        <FontAwesomeIcon icon={["fas", "fa-arrow-right"]}/>
+                      </Button>
+                    </Col>
+                  </Row> : null}
               </Card.Text>
-              {/* <p onClick={handlePagination} disabled={pagination.pages_count === pagination.current_page} className="text-light font-weight-light">Pagination</p> */}
             </Card.Body>
         </Card>
+        <ModalConfirmation handleClose={ () => setSelectedAlbum(null)} show={selected_album != null && op === "delete"}
+          title="Click em confirmar para remover o item." subtitle={_.get(selected_album, "name")}
+          handleConfirm={() => handleConfirmDeletion(selected_album.id)} layout="centered"
+          textBntOK="Confirmar"
+        />
     </Col>
   )
 }

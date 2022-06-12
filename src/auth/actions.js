@@ -9,14 +9,9 @@ export function refreshToken(token){
 }
 
 export function login(values) {
-  const config = {
-    "headers":{
-      'Content-Type': process.env.REACT_APP_CONTENTTYPE
-    }
-  }
   return dispatch => { 
     dispatch([{ type: "SHOW_OVERLAY" }]);
-    axios.post(`/auth/sign_in`, values, config).then(resp => {
+    axios.post('/auth/sign_in', values).then(resp => {
       dispatch(
         [
           {
@@ -54,14 +49,9 @@ export function login(values) {
 }
 
 export function register(values) {
-  const config = {
-    "headers":{
-      'Content-Type': process.env.REACT_APP_CONTENTTYPE
-    }
-  }
   return dispatch => { 
     dispatch([{ type: "SHOW_OVERLAY" }]);
-    axios.post(`/auth`, values, config).then(resp => {
+    axios.post(`/auth`, values).then(resp => {
       dispatch(
         [
           {
@@ -134,7 +124,7 @@ export function validateToken(data) {
     }
   }
   return dispatch => {
-    axios.get(`${process.env.REACT_APP_API_URL}/auth/validate_token`,config)
+    axios.get('/auth/validate_token', config)
       .then(resp => {
         dispatch([
           {type: "TOKEN_VALIDATED", payload: resp.data.success || false},

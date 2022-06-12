@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThroughProvider } from "react-through";
 import { ActionCableProvider } from '@thrash-industries/react-actioncable-provider';
+import axios from 'axios'
 import App from "./App";
 import Auth from "./auth/auth";
 import { validateToken } from "./auth/actions";
@@ -18,6 +19,8 @@ let AuthOrApp = props => {
   const dispatch = useDispatch()
   const { user, validToken } = useSelector(state => state.auth)
   const {children} = props;
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL
+	axios.defaults.headers.common['Content-type'] = 'application/json';
 
   useEffect(() => {
     const local_storage = JSON.parse(localStorage.getItem(process.env.REACT_APP_APPLICATION_NAME)) || null

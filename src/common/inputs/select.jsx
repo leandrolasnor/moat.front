@@ -1,6 +1,6 @@
 import Form from "react-bootstrap/Form";
 
-export default ({
+let Select = ({
   input,
   options,
   label,
@@ -19,3 +19,5 @@ export default ({
     {touched && error && <span>{error}</span>}
   </span>
 );
+
+export default Select;

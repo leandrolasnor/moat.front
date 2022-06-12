@@ -86,7 +86,7 @@ let Auth = props => {
                             <Field name="confirm_pwd" required component={InputText} type="password" placeholder="Confirmation Password"/>
                           </Col>
                           <Col lg={6} md={12} sm={12} xs={12}>
-                            <button type="submit" disabled={submitting || (password_confirmation != register_password)} className="mt-2 btn btn-success btn-block pull-right font-weight-bold btn-sm">New user</button>
+                            <button type="submit" disabled={submitting || (password_confirmation !== register_password)} className="mt-2 btn btn-success btn-block pull-right font-weight-bold btn-sm">New user</button>
                           </Col>
                         </Form.Group>
                       </Form>
