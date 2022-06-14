@@ -52,10 +52,21 @@ export function update_album(album){
 
 export function show_album(id){
   return dispatch => {
-    dispatch({type: 'ALBUM_FETCHED', payload: {}})
-    axios.put(`/albums/${id}`).then(resp => {
+    axios.get(`/albums/${id}`).then(resp => {
       dispatch({type: 'ALBUM_FETCHED', payload: resp.data})
     }).catch(e => {
+      if (e.response) {
+        if (e.response.data.errors) {
+            e.response.data.errors.forEach(error => toastr.error("Error", error));
+        } else {toastr.error(String(e.response.status), e.response.statusText);}
+      } else if (e.request) {toastr.error("Error", e.message);}
+    });
+  };
+}
+
+export function list_artists(){
+  return dispatch => {
+    axios.get(`/artists`).then(resp => {}).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
             e.response.data.errors.forEach(error => toastr.error("Error", error));

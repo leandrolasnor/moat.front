@@ -1,13 +1,6 @@
 import { Modal, Button, Row, Col, Container } from "react-bootstrap"
-
-export default (props) => {
-
-  const {
-    handleConfirm, phrase, show,
-    handleClose, title, subtitle,
-    textBntOK} = props
-  
-
+const modalConfirmation = (props) => {
+  const {handleConfirm, phrase, show, handleClose, title, subtitle, textBntOK} = props
   return (
     <Col>
       <Modal size="md" centered show={show} onHide={handleClose}>
@@ -37,5 +30,5 @@ export default (props) => {
       </Modal>
     </Col>
   )
-
 }
+export default modalConfirmation;
