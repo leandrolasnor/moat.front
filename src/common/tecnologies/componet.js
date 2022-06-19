@@ -14,21 +14,9 @@ let Tecnologies = props => {
                 </ReactTooltip>
             </li>
             <li>
-                <a href="/#" data-tip data-for="icicd"><FontAwesomeIcon className="hvr-sink" icon={["fas", "fa-infinity"]} /></a>
-                <ReactTooltip id='icicd' place="bottom" effect="solid" textColor="#fff" arrowColor="transparent" backgroundColor="transparent">
-                    <span>CI/CD</span>
-                </ReactTooltip>
-            </li>
-            <li>
                 <a href="/#" data-tip data-for="ireact"><FontAwesomeIcon className="hvr-sink" icon={["fab", "react"]} /></a>
                 <ReactTooltip id='ireact' type='light' place="bottom" effect="solid" textColor="#fff" arrowColor="transparent" backgroundColor="transparent">
                     <span>React</span>
-                </ReactTooltip>
-            </li>
-            <li>
-                <a href="/#" data-tip data-for="iarchitecta"><FontAwesomeIcon className="hvr-sink" icon={["fas", "fa-cubes"]} /></a>
-                <ReactTooltip id='iarchitecta' type='light' place="bottom" effect="solid" textColor="#fff" arrowColor="transparent" backgroundColor="transparent">
-                    <span>Arquitetura</span>
                 </ReactTooltip>
             </li>
             <li>

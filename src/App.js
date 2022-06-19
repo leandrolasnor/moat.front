@@ -4,6 +4,7 @@ import Profile from './common/profile/component'
 import ListTecnologies from './common/tecnologies/componet'
 import { Container, Row, Col } from "react-bootstrap";
 import {ActionCableConsumer } from '@thrash-industries/react-actioncable-provider';
+import { toastr } from "react-redux-toastr";
 import axios from 'axios'
 
 var _ = require('lodash');
@@ -16,6 +17,11 @@ let App = props => {
 	const handleReceived = props => {
     const {type, payload} = props
     dispatch({type: type, payload: payload});
+		if(type.indexOf("ERRORS") > -1){
+			payload.errors.forEach(error => {
+				toastr.error("Erro", error)
+			});
+		}
   }
 
 	axios.defaults.headers.common['uid'] = _.get(user, "uid");

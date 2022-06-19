@@ -17,7 +17,7 @@ var reducer = (state = INITIAL_STATE, action) => {
     case 'ALBUM_FETCHED':
       return {
         ...state,
-        album: action.payload
+        album: action.payload.album
       }
     case 'ALBUM_CREATED':
       return {
@@ -55,6 +55,8 @@ var reducer = (state = INITIAL_STATE, action) => {
     case 'ERRORS_FROM_ALBUM_REMOVED':
       // action.payload.errors.forEach(error =>toastr.error("Error", error));
       return state
+    case 'LOGOUT':
+      return INITIAL_STATE
     default:
       return state;
   }

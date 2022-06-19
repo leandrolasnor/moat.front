@@ -52,9 +52,7 @@ export function update_album(album){
 
 export function show_album(id){
   return dispatch => {
-    axios.get(`/albums/${id}`).then(resp => {
-      dispatch({type: 'ALBUM_FETCHED', payload: resp.data})
-    }).catch(e => {
+    axios.get(`/albums/${id}`).then(resp => {}).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
             e.response.data.errors.forEach(error => toastr.error("Error", error));

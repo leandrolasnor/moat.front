@@ -10,7 +10,6 @@ export function refreshToken(token){
 
 export function login(values) {
   return dispatch => { 
-    dispatch([{ type: "SHOW_OVERLAY" }]);
     axios.post('/auth/sign_in', values).then(resp => {
       dispatch(
         [
@@ -50,7 +49,6 @@ export function login(values) {
 
 export function register(values) {
   return dispatch => { 
-    dispatch([{ type: "SHOW_OVERLAY" }]);
     axios.post(`/auth`, values).then(resp => {
       dispatch(
         [
@@ -72,8 +70,8 @@ export function register(values) {
     }).catch(e => {
       if (e.response) {
         if (e.response.data.errors) {
-            e.response.data.errors.forEach(error =>
-            toastr.error("Erro", error)
+            e.response.data.errors.full_messages.forEach(error =>
+            toastr.error("Error", error)
           );
         } else {
           toastr.error(String(e.response.status), e.response.statusText);
