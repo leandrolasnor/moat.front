@@ -3,6 +3,6 @@ setup:
     NODE_ENV: staging
 build:
   docker:
-    react: Dockerfile    
+    web: Dockerfile    
 run:
-  react: sh -c "yarn start"
+  web: sh -c "yarn start"
