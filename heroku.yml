@@ -1,0 +1,8 @@
+setup:
+  config:
+    NODE_ENV: staging
+build:
+  docker:
+    react: Dockerfile    
+run:
+  react: sh -c "yarn start"
