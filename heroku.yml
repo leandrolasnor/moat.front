@@ -1,6 +1,3 @@
-setup:
-  config:
-    NODE_ENV: staging
 build:
   docker:
     web: Dockerfile    
